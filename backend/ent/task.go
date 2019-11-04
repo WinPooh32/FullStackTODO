@@ -14,35 +14,30 @@ type Task struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// UID holds the value of the "uid" field.
-	UID uint32 `json:"uid,omitempty"`
 	// Lable holds the value of the "lable" field.
 	Lable string `json:"lable,omitempty"`
-	// Complete holds the value of the "complete" field.
-	Complete bool `json:"complete,omitempty"`
+	// IsComplete holds the value of the "isComplete" field.
+	IsComplete bool `json:"isComplete,omitempty"`
 }
 
 // FromRows scans the sql response data into Task.
 func (t *Task) FromRows(rows *sql.Rows) error {
 	var vt struct {
-		ID       int
-		UID      sql.NullInt64
-		Lable    sql.NullString
-		Complete sql.NullBool
+		ID         int
+		Lable      sql.NullString
+		IsComplete sql.NullBool
 	}
 	// the order here should be the same as in the `task.Columns`.
 	if err := rows.Scan(
 		&vt.ID,
-		&vt.UID,
 		&vt.Lable,
-		&vt.Complete,
+		&vt.IsComplete,
 	); err != nil {
 		return err
 	}
 	t.ID = vt.ID
-	t.UID = uint32(vt.UID.Int64)
 	t.Lable = vt.Lable.String
-	t.Complete = vt.Complete.Bool
+	t.IsComplete = vt.IsComplete.Bool
 	return nil
 }
 
@@ -69,12 +64,10 @@ func (t *Task) String() string {
 	var builder strings.Builder
 	builder.WriteString("Task(")
 	builder.WriteString(fmt.Sprintf("id=%v", t.ID))
-	builder.WriteString(", uid=")
-	builder.WriteString(fmt.Sprintf("%v", t.UID))
 	builder.WriteString(", lable=")
 	builder.WriteString(t.Lable)
-	builder.WriteString(", complete=")
-	builder.WriteString(fmt.Sprintf("%v", t.Complete))
+	builder.WriteString(", isComplete=")
+	builder.WriteString(fmt.Sprintf("%v", t.IsComplete))
 	builder.WriteByte(')')
 	return builder.String()
 }

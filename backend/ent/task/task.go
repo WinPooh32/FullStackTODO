@@ -2,21 +2,15 @@
 
 package task
 
-import (
-	"backend/ent/schema"
-)
-
 const (
 	// Label holds the string label denoting the task type in the database.
 	Label = "task"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldUID holds the string denoting the uid vertex property in the database.
-	FieldUID = "uid"
 	// FieldLable holds the string denoting the lable vertex property in the database.
 	FieldLable = "lable"
-	// FieldComplete holds the string denoting the complete vertex property in the database.
-	FieldComplete = "complete"
+	// FieldIsComplete holds the string denoting the iscomplete vertex property in the database.
+	FieldIsComplete = "is_complete"
 
 	// Table holds the table name of the task in the database.
 	Table = "tasks"
@@ -25,16 +19,6 @@ const (
 // Columns holds all SQL columns are task fields.
 var Columns = []string{
 	FieldID,
-	FieldUID,
 	FieldLable,
-	FieldComplete,
+	FieldIsComplete,
 }
-
-var (
-	fields = schema.Task{}.Fields()
-
-	// descUID is the schema descriptor for uid field.
-	descUID = fields[0].Descriptor()
-	// UIDValidator is a validator for the "uid" field. It is called by the builders before save.
-	UIDValidator = descUID.Validators[0].(func(uint32) error)
-)

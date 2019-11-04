@@ -11,9 +11,8 @@ var (
 	// TasksColumns holds the columns for the "tasks" table.
 	TasksColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "uid", Type: field.TypeUint32},
 		{Name: "lable", Type: field.TypeString},
-		{Name: "complete", Type: field.TypeBool},
+		{Name: "is_complete", Type: field.TypeBool},
 	}
 	// TasksTable holds the schema information for the "tasks" table.
 	TasksTable = &schema.Table{

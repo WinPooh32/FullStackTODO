@@ -13,9 +13,8 @@ type Task struct {
 // Fields of the Task.
 func (Task) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint32("uid").Positive(),
 		field.String("lable"),
-		field.Bool("complete"),
+		field.Bool("isComplete"),
 	}
 }
 

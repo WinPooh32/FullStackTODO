@@ -14,10 +14,8 @@ import (
 // TaskUpdate is the builder for updating Task entities.
 type TaskUpdate struct {
 	config
-	uid        *uint32
-	adduid     *uint32
 	lable      *string
-	complete   *bool
+	isComplete *bool
 	predicates []predicate.Task
 }
 
@@ -27,42 +25,20 @@ func (tu *TaskUpdate) Where(ps ...predicate.Task) *TaskUpdate {
 	return tu
 }
 
-// SetUID sets the uid field.
-func (tu *TaskUpdate) SetUID(u uint32) *TaskUpdate {
-	tu.uid = &u
-	tu.adduid = nil
-	return tu
-}
-
-// AddUID adds u to uid.
-func (tu *TaskUpdate) AddUID(u uint32) *TaskUpdate {
-	if tu.adduid == nil {
-		tu.adduid = &u
-	} else {
-		*tu.adduid += u
-	}
-	return tu
-}
-
 // SetLable sets the lable field.
 func (tu *TaskUpdate) SetLable(s string) *TaskUpdate {
 	tu.lable = &s
 	return tu
 }
 
-// SetComplete sets the complete field.
-func (tu *TaskUpdate) SetComplete(b bool) *TaskUpdate {
-	tu.complete = &b
+// SetIsComplete sets the isComplete field.
+func (tu *TaskUpdate) SetIsComplete(b bool) *TaskUpdate {
+	tu.isComplete = &b
 	return tu
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (tu *TaskUpdate) Save(ctx context.Context) (int, error) {
-	if tu.uid != nil {
-		if err := task.UIDValidator(*tu.uid); err != nil {
-			return 0, fmt.Errorf("ent: validator failed for field \"uid\": %v", err)
-		}
-	}
 	return tu.sqlSave(ctx)
 }
 
@@ -122,17 +98,11 @@ func (tu *TaskUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		res     sql.Result
 		updater = builder.Update(task.Table).Where(sql.InInts(task.FieldID, ids...))
 	)
-	if value := tu.uid; value != nil {
-		updater.Set(task.FieldUID, *value)
-	}
-	if value := tu.adduid; value != nil {
-		updater.Add(task.FieldUID, *value)
-	}
 	if value := tu.lable; value != nil {
 		updater.Set(task.FieldLable, *value)
 	}
-	if value := tu.complete; value != nil {
-		updater.Set(task.FieldComplete, *value)
+	if value := tu.isComplete; value != nil {
+		updater.Set(task.FieldIsComplete, *value)
 	}
 	if !updater.Empty() {
 		query, args := updater.Query()
@@ -149,28 +119,9 @@ func (tu *TaskUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // TaskUpdateOne is the builder for updating a single Task entity.
 type TaskUpdateOne struct {
 	config
-	id       int
-	uid      *uint32
-	adduid   *uint32
-	lable    *string
-	complete *bool
-}
-
-// SetUID sets the uid field.
-func (tuo *TaskUpdateOne) SetUID(u uint32) *TaskUpdateOne {
-	tuo.uid = &u
-	tuo.adduid = nil
-	return tuo
-}
-
-// AddUID adds u to uid.
-func (tuo *TaskUpdateOne) AddUID(u uint32) *TaskUpdateOne {
-	if tuo.adduid == nil {
-		tuo.adduid = &u
-	} else {
-		*tuo.adduid += u
-	}
-	return tuo
+	id         int
+	lable      *string
+	isComplete *bool
 }
 
 // SetLable sets the lable field.
@@ -179,19 +130,14 @@ func (tuo *TaskUpdateOne) SetLable(s string) *TaskUpdateOne {
 	return tuo
 }
 
-// SetComplete sets the complete field.
-func (tuo *TaskUpdateOne) SetComplete(b bool) *TaskUpdateOne {
-	tuo.complete = &b
+// SetIsComplete sets the isComplete field.
+func (tuo *TaskUpdateOne) SetIsComplete(b bool) *TaskUpdateOne {
+	tuo.isComplete = &b
 	return tuo
 }
 
 // Save executes the query and returns the updated entity.
 func (tuo *TaskUpdateOne) Save(ctx context.Context) (*Task, error) {
-	if tuo.uid != nil {
-		if err := task.UIDValidator(*tuo.uid); err != nil {
-			return nil, fmt.Errorf("ent: validator failed for field \"uid\": %v", err)
-		}
-	}
 	return tuo.sqlSave(ctx)
 }
 
@@ -254,21 +200,13 @@ func (tuo *TaskUpdateOne) sqlSave(ctx context.Context) (t *Task, err error) {
 		res     sql.Result
 		updater = builder.Update(task.Table).Where(sql.InInts(task.FieldID, ids...))
 	)
-	if value := tuo.uid; value != nil {
-		updater.Set(task.FieldUID, *value)
-		t.UID = *value
-	}
-	if value := tuo.adduid; value != nil {
-		updater.Add(task.FieldUID, *value)
-		t.UID += *value
-	}
 	if value := tuo.lable; value != nil {
 		updater.Set(task.FieldLable, *value)
 		t.Lable = *value
 	}
-	if value := tuo.complete; value != nil {
-		updater.Set(task.FieldComplete, *value)
-		t.Complete = *value
+	if value := tuo.isComplete; value != nil {
+		updater.Set(task.FieldIsComplete, *value)
+		t.IsComplete = *value
 	}
 	if !updater.Empty() {
 		query, args := updater.Query()

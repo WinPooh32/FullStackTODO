@@ -32,8 +32,7 @@ type Route struct {
 type Routes []Route
 
 // NewRouter returns a new router.
-func NewRouter() *gin.Engine {
-	router := gin.Default()
+func NewRouter(router *gin.Engine) *gin.Engine {
 	for _, route := range routes {
 		switch route.Method {
 		case http.MethodGet:
@@ -50,19 +49,7 @@ func NewRouter() *gin.Engine {
 	return router
 }
 
-// Index is the index handler.
-func Index(c *gin.Context) {
-	c.String(http.StatusOK, "Hello World!")
-}
-
 var routes = Routes{
-	{
-		"Index",
-		http.MethodGet,
-		"/v1/",
-		Index,
-	},
-
 	{
 		"ListGet",
 		http.MethodGet,

@@ -1,27 +1,30 @@
 package main
 
 import (
-	"context"
 	"log"
 
-	"backend/ent"
+	"backend/orm"
 	"backend/todo"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
-	if err != nil {
-		log.Fatalf("failed opening connection to sqlite: %v", err)
-	}
-	defer client.Close()
-	// run the auto migration tool.
-	if err := client.Schema.Create(context.Background()); err != nil {
-		log.Fatalf("failed creating schema resources: %v", err)
-	}
-
 	log.Printf("Server started")
-	router := todo.NewRouter()
-	log.Fatal(router.Run(":8080"))
+
+	client := orm.Connect()
+	defer client.Close()
+
+	cors := cors.Default() //FIXME for debug purpose
+	router := gin.Default()
+
+	router.Use(
+		orm.NewMiddleware(client),
+		cors,
+	)
+
+	todo.NewRouter(router)
+
+	log.Fatal(router.Run(":8181"))
 }

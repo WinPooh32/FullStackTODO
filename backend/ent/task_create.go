@@ -6,7 +6,6 @@ import (
 	"backend/ent/task"
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/facebookincubator/ent/dialect/sql"
 )
@@ -14,15 +13,8 @@ import (
 // TaskCreate is the builder for creating a Task entity.
 type TaskCreate struct {
 	config
-	uid      *uint32
-	lable    *string
-	complete *bool
-}
-
-// SetUID sets the uid field.
-func (tc *TaskCreate) SetUID(u uint32) *TaskCreate {
-	tc.uid = &u
-	return tc
+	lable      *string
+	isComplete *bool
 }
 
 // SetLable sets the lable field.
@@ -31,25 +23,19 @@ func (tc *TaskCreate) SetLable(s string) *TaskCreate {
 	return tc
 }
 
-// SetComplete sets the complete field.
-func (tc *TaskCreate) SetComplete(b bool) *TaskCreate {
-	tc.complete = &b
+// SetIsComplete sets the isComplete field.
+func (tc *TaskCreate) SetIsComplete(b bool) *TaskCreate {
+	tc.isComplete = &b
 	return tc
 }
 
 // Save creates the Task in the database.
 func (tc *TaskCreate) Save(ctx context.Context) (*Task, error) {
-	if tc.uid == nil {
-		return nil, errors.New("ent: missing required field \"uid\"")
-	}
-	if err := task.UIDValidator(*tc.uid); err != nil {
-		return nil, fmt.Errorf("ent: validator failed for field \"uid\": %v", err)
-	}
 	if tc.lable == nil {
 		return nil, errors.New("ent: missing required field \"lable\"")
 	}
-	if tc.complete == nil {
-		return nil, errors.New("ent: missing required field \"complete\"")
+	if tc.isComplete == nil {
+		return nil, errors.New("ent: missing required field \"isComplete\"")
 	}
 	return tc.sqlSave(ctx)
 }
@@ -73,17 +59,13 @@ func (tc *TaskCreate) sqlSave(ctx context.Context) (*Task, error) {
 		return nil, err
 	}
 	insert := builder.Insert(task.Table).Default()
-	if value := tc.uid; value != nil {
-		insert.Set(task.FieldUID, *value)
-		t.UID = *value
-	}
 	if value := tc.lable; value != nil {
 		insert.Set(task.FieldLable, *value)
 		t.Lable = *value
 	}
-	if value := tc.complete; value != nil {
-		insert.Set(task.FieldComplete, *value)
-		t.Complete = *value
+	if value := tc.isComplete; value != nil {
+		insert.Set(task.FieldIsComplete, *value)
+		t.IsComplete = *value
 	}
 	id, err := insertLastID(ctx, tx, insert.Returning(task.FieldID))
 	if err != nil {

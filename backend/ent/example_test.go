@@ -31,9 +31,8 @@ func ExampleTask() {
 	// create task vertex with its edges.
 	t := client.Task.
 		Create().
-		SetUID(1).
 		SetLable("string").
-		SetComplete(true).
+		SetIsComplete(true).
 		SaveX(ctx)
 	log.Println("task created:", t)
 

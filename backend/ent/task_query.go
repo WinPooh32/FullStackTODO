@@ -224,12 +224,12 @@ func (tq *TaskQuery) Clone() *TaskQuery {
 // Example:
 //
 //	var v []struct {
-//		UID uint32 `json:"uid,omitempty"`
+//		Lable string `json:"lable,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Task.Query().
-//		GroupBy(task.FieldUID).
+//		GroupBy(task.FieldLable).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -245,11 +245,11 @@ func (tq *TaskQuery) GroupBy(field string, fields ...string) *TaskGroupBy {
 // Example:
 //
 //	var v []struct {
-//		UID uint32 `json:"uid,omitempty"`
+//		Lable string `json:"lable,omitempty"`
 //	}
 //
 //	client.Task.Query().
-//		Select(task.FieldUID).
+//		Select(task.FieldLable).
 //		Scan(ctx, &v)
 //
 func (tq *TaskQuery) Select(field string, fields ...string) *TaskSelect {

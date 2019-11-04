@@ -109,15 +109,6 @@ func IDLTE(id int) predicate.Task {
 	)
 }
 
-// UID applies equality check predicate on the "uid" field. It's identical to UIDEQ.
-func UID(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.EQ(s.C(FieldUID), v))
-		},
-	)
-}
-
 // Lable applies equality check predicate on the "lable" field. It's identical to LableEQ.
 func Lable(v string) predicate.Task {
 	return predicate.Task(
@@ -127,103 +118,11 @@ func Lable(v string) predicate.Task {
 	)
 }
 
-// Complete applies equality check predicate on the "complete" field. It's identical to CompleteEQ.
-func Complete(v bool) predicate.Task {
+// IsComplete applies equality check predicate on the "isComplete" field. It's identical to IsCompleteEQ.
+func IsComplete(v bool) predicate.Task {
 	return predicate.Task(
 		func(s *sql.Selector) {
-			s.Where(sql.EQ(s.C(FieldComplete), v))
-		},
-	)
-}
-
-// UIDEQ applies the EQ predicate on the "uid" field.
-func UIDEQ(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.EQ(s.C(FieldUID), v))
-		},
-	)
-}
-
-// UIDNEQ applies the NEQ predicate on the "uid" field.
-func UIDNEQ(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.NEQ(s.C(FieldUID), v))
-		},
-	)
-}
-
-// UIDIn applies the In predicate on the "uid" field.
-func UIDIn(vs ...uint32) predicate.Task {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Task(
-		func(s *sql.Selector) {
-			// if not arguments were provided, append the FALSE constants,
-			// since we can't apply "IN ()". This will make this predicate falsy.
-			if len(vs) == 0 {
-				s.Where(sql.False())
-				return
-			}
-			s.Where(sql.In(s.C(FieldUID), v...))
-		},
-	)
-}
-
-// UIDNotIn applies the NotIn predicate on the "uid" field.
-func UIDNotIn(vs ...uint32) predicate.Task {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Task(
-		func(s *sql.Selector) {
-			// if not arguments were provided, append the FALSE constants,
-			// since we can't apply "IN ()". This will make this predicate falsy.
-			if len(vs) == 0 {
-				s.Where(sql.False())
-				return
-			}
-			s.Where(sql.NotIn(s.C(FieldUID), v...))
-		},
-	)
-}
-
-// UIDGT applies the GT predicate on the "uid" field.
-func UIDGT(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.GT(s.C(FieldUID), v))
-		},
-	)
-}
-
-// UIDGTE applies the GTE predicate on the "uid" field.
-func UIDGTE(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.GTE(s.C(FieldUID), v))
-		},
-	)
-}
-
-// UIDLT applies the LT predicate on the "uid" field.
-func UIDLT(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.LT(s.C(FieldUID), v))
-		},
-	)
-}
-
-// UIDLTE applies the LTE predicate on the "uid" field.
-func UIDLTE(v uint32) predicate.Task {
-	return predicate.Task(
-		func(s *sql.Selector) {
-			s.Where(sql.LTE(s.C(FieldUID), v))
+			s.Where(sql.EQ(s.C(FieldIsComplete), v))
 		},
 	)
 }
@@ -365,20 +264,20 @@ func LableContainsFold(v string) predicate.Task {
 	)
 }
 
-// CompleteEQ applies the EQ predicate on the "complete" field.
-func CompleteEQ(v bool) predicate.Task {
+// IsCompleteEQ applies the EQ predicate on the "isComplete" field.
+func IsCompleteEQ(v bool) predicate.Task {
 	return predicate.Task(
 		func(s *sql.Selector) {
-			s.Where(sql.EQ(s.C(FieldComplete), v))
+			s.Where(sql.EQ(s.C(FieldIsComplete), v))
 		},
 	)
 }
 
-// CompleteNEQ applies the NEQ predicate on the "complete" field.
-func CompleteNEQ(v bool) predicate.Task {
+// IsCompleteNEQ applies the NEQ predicate on the "isComplete" field.
+func IsCompleteNEQ(v bool) predicate.Task {
 	return predicate.Task(
 		func(s *sql.Selector) {
-			s.Where(sql.NEQ(s.C(FieldComplete), v))
+			s.Where(sql.NEQ(s.C(FieldIsComplete), v))
 		},
 	)
 }
