@@ -1,0 +1,125 @@
+openapi: "3.0.2"
+info:
+  title: API TODO list
+  version: "0.0.1"
+  contact:
+    name: WinPooh32
+    email: winpooh32@yandex.ru
+    url: https://t.me/WinPooh32
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:8181/v1
+
+paths:
+  /list:
+    get:
+      summary: Gets all TODO tasks.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/List"
+        # Definition of all error statuses
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /task:
+    put:
+      summary: Adds or update TODO task.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: Task is successfully added to list.
+        # Definition of all error statuses
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    delete:
+      summary: Deletes task by id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: Task is successfully added to list.
+        # Definition of all error statuses
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+  schemas:
+    Error:
+      description: Error response body.
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+    Task:
+      description: Task item body.
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          nullable: true # can be skipped
+        lable:
+          type: string
+          nullable: true # can be skipped
+        isComplete:
+          type: boolean
+          nullable: true # can be skipped
+      required:
+        - id
+        - lable
+        - isComplete
+
+    List:
+      description: Array of tasks.
+      type: array
+      items:
+        $ref: "#/components/schemas/Task"
