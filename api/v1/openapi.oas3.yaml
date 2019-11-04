@@ -10,7 +10,7 @@ info:
     name: MIT
 
 servers:
-  - url: http://localhost:8181/v1
+  - url: http://127.0.0.1:8181/v1
 
 paths:
   /list:
@@ -42,7 +42,7 @@ paths:
               $ref: "#/components/schemas/Task"
       responses:
         "200":
-          description: Task is successfully added to list.
+          description: Task is successfully added or updated.
         # Definition of all error statuses
         default:
           description: Unexpected error
@@ -61,7 +61,7 @@ paths:
               $ref: "#/components/schemas/Task"
       responses:
         "200":
-          description: Task is successfully added to list.
+          description: Task successfully deleted.
         # Definition of all error statuses
         default:
           description: Unexpected error
