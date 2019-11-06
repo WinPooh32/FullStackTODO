@@ -8,6 +8,7 @@
 *.out
 *.~lock*
 
+.nuxt
 node_modules
 backend/backend
 backend/*debug*
