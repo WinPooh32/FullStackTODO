@@ -7,6 +7,18 @@
 </template>
 
 <script>
+const myapi = require("todo");
+
+console.log(myapi);
+let api = new myapi.DefaultApi();
+api.listGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log("API called successfully. Returned data: ", data);
+  }
+});
+
 const data = {
   handleClick: function() {
     console.log("CLICKED!");
@@ -29,7 +41,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss">
 .ymca {
