@@ -1,3 +1,5 @@
+const path = require('path')
+
 export default {
   mode: 'spa',
   /*
@@ -65,6 +67,12 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, {
+      isDev,
+      isClient
+    }) {
+      // resolve local modules from assets folder
+      config.resolve.modules = [path.resolve(__dirname, 'assets'), 'node_modules']
+    }
   }
 }
