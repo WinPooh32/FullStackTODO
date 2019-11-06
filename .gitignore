@@ -12,3 +12,4 @@
 node_modules
 backend/backend
 backend/*debug*
+frontend/dist
