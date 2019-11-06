@@ -33,5 +33,9 @@ func ListGet(ctx *gin.Context) {
 		return
 	}
 
+	if list == nil {
+		list = []*ent.Task{}
+	}
+
 	ctx.JSON(http.StatusOK, list)
 }
