@@ -55,6 +55,10 @@ func storageAddTask(ctx context.Context, client *ent.Client, task Task) (*ent.Ta
 }
 
 func storageUpdateTask(ctx context.Context, client *ent.Client, tsk Task) (*ent.Task, error) {
+	if tsk.Id == nil || tsk.Lable == nil || tsk.IsComplete == nil {
+		return nil, fmt.Errorf("unexpected nil fields in Task")
+	}
+
 	searchId := int(*tsk.Id)
 
 	exist, err := client.Task.
