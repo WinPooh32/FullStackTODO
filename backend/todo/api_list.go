@@ -2,6 +2,7 @@ package todo
 
 import (
 	"backend/ent"
+	"backend/ent/task"
 	"backend/orm"
 	"context"
 	"log"
@@ -12,7 +13,10 @@ import (
 )
 
 func storageGetTasks(ctx context.Context, client *ent.Client) ([]*ent.Task, error) {
-	list, err := client.Task.Query().All(ctx)
+	list, err := client.Task.
+		Query().
+		Order(ent.Desc(task.FieldID)).
+		All(ctx)
 	return list, err
 }
 
