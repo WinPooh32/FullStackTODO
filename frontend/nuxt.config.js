@@ -1,7 +1,7 @@
 const path = require('path')
 
 export default {
-  mode: 'spa',
+  mode: 'universal', //'spa', 
   /*
    ** Headers of the page
    */
@@ -63,7 +63,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    transpile: [/^element-ui/, /todo/],
     /*
      ** You can extend webpack config here
      */
@@ -72,7 +72,11 @@ export default {
       isClient
     }) {
       // resolve local modules from assets folder
-      config.resolve.modules = [path.resolve(__dirname, 'assets'), 'node_modules']
-    }
+      // config.resolve.modules = [path.resolve(__dirname, 'assets'), 'node_modules'];
+      config.mode = isDev ? 'development' : 'production';
+    },
+    // babel: {
+    //   babelrc: true
+    // }
   }
 }
