@@ -36,13 +36,13 @@ export default {
    ** Global CSS
    */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    // 'element-ui/lib/theme-chalk/index.css'
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/element-ui'
+    // '@/plugins/element-ui'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -51,7 +51,10 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/style-resources'],
+  modules: [
+    '@nuxtjs/style-resources',
+    'bootstrap-vue/nuxt',
+  ],
   styleResources: {
     // your settings here
     scss: [
@@ -63,7 +66,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/, /todo/],
+    transpile: [/^todo/],
     /*
      ** You can extend webpack config here
      */
