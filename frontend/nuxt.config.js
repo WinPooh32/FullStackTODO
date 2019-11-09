@@ -75,8 +75,5 @@ export default {
       // config.resolve.modules = [path.resolve(__dirname, 'assets'), 'node_modules'];
       config.mode = isDev ? 'development' : 'production';
     },
-    // babel: {
-    //   babelrc: true
-    // }
   }
 }
