@@ -103,14 +103,12 @@ var ApiTodoList = require('api_todo_list');
 
 
 var api = new ApiTodoList.DefaultApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.listGet(callback);
+api.listGet().then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
 
 ```
 

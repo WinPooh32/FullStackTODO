@@ -22,13 +22,12 @@ Gets all TODO tasks.
 import ApiTodoList from 'api_todo_list';
 
 let apiInstance = new ApiTodoList.DefaultApi();
-apiInstance.listGet((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.listGet().then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -62,13 +61,12 @@ import ApiTodoList from 'api_todo_list';
 
 let apiInstance = new ApiTodoList.DefaultApi();
 let task = new ApiTodoList.Task(); // Task | 
-apiInstance.taskDelete(task, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
+apiInstance.taskDelete(task).then(() => {
+  console.log('API called successfully.');
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -105,13 +103,12 @@ import ApiTodoList from 'api_todo_list';
 
 let apiInstance = new ApiTodoList.DefaultApi();
 let task = new ApiTodoList.Task(); // Task | 
-apiInstance.taskPut(task, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
+apiInstance.taskPut(task).then(() => {
+  console.log('API called successfully.');
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters

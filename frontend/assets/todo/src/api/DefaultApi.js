@@ -35,20 +35,12 @@ export default class DefaultApi {
     }
 
 
-    /**
-     * Callback function to receive the result of the listGet operation.
-     * @callback module:api/DefaultApi~listGetCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Task>} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
 
     /**
      * Gets all TODO tasks.
-     * @param {module:api/DefaultApi~listGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Task>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link Array.<module:model/Task>} and HTTP response
      */
-    listGet(callback) {
+    listGetWithHttpInfo() {
       let postBody = null;
 
       let pathParams = {
@@ -67,24 +59,28 @@ export default class DefaultApi {
       return this.apiClient.callApi(
         '/list', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, null, callback
+        authNames, contentTypes, accepts, returnType, null
       );
     }
 
     /**
-     * Callback function to receive the result of the taskDelete operation.
-     * @callback module:api/DefaultApi~taskDeleteCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
+     * Gets all TODO tasks.
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link Array.<module:model/Task>}
      */
+    listGet() {
+      return this.listGetWithHttpInfo()
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Deletes task by id.
      * @param {module:model/Task} task 
-     * @param {module:api/DefaultApi~taskDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
-    taskDelete(task, callback) {
+    taskDeleteWithHttpInfo(task) {
       let postBody = task;
       // verify the required parameter 'task' is set
       if (task === undefined || task === null) {
@@ -107,24 +103,29 @@ export default class DefaultApi {
       return this.apiClient.callApi(
         '/task', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, null, callback
+        authNames, contentTypes, accepts, returnType, null
       );
     }
 
     /**
-     * Callback function to receive the result of the taskPut operation.
-     * @callback module:api/DefaultApi~taskPutCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
+     * Deletes task by id.
+     * @param {module:model/Task} task 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
+    taskDelete(task) {
+      return this.taskDeleteWithHttpInfo(task)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Adds or update TODO task.
      * @param {module:model/Task} task 
-     * @param {module:api/DefaultApi~taskPutCallback} callback The callback function, accepting three arguments: error, data, response
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
-    taskPut(task, callback) {
+    taskPutWithHttpInfo(task) {
       let postBody = task;
       // verify the required parameter 'task' is set
       if (task === undefined || task === null) {
@@ -147,8 +148,20 @@ export default class DefaultApi {
       return this.apiClient.callApi(
         '/task', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, null, callback
+        authNames, contentTypes, accepts, returnType, null
       );
+    }
+
+    /**
+     * Adds or update TODO task.
+     * @param {module:model/Task} task 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}
+     */
+    taskPut(task) {
+      return this.taskPutWithHttpInfo(task)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
     }
 
 
