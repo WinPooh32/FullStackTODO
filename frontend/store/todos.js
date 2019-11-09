@@ -1,14 +1,13 @@
-export const state = () => ({
-    list: []
-})
-
 import {
     DefaultApi
 } from "todo";
 
+export const state = () => ({
+    list: []
+})
+
 export const getters = {
     list(state) {
-        console.log(state.list)
         return state.list
     }
 }
@@ -18,37 +17,30 @@ export const mutations = {
         state.list = list
     },
 
-    add(state, {
-        id,
-        lable,
-        isComplete
-    }) {
-        state.list.push({
-            id,
-            lable,
-            isComplete: isComplete
-        })
+    add(state, task) {
+        state.list.push(task)
     },
 
-    remove(state, {
-        todo
-    }) {
-        state.list.splice(state.list.indexOf(todo), 1)
+    remove(state, task) {
+        state.list.splice(state.list.indexOf(task), 1)
     },
 
-    toggle(state, todo) {
-        todo.isComplete = !todo.isComplete
+    toggle(state, {
+        task,
+        value
+    }) {
+        task.isComplete = value
     }
 }
 
-const api = new DefaultApi();
+const api = new DefaultApi()
 
 export const actions = {
     async fetch({
         commit
     }) {
-        const rawData = await api.listGet();
-        const list = [];
+        const rawData = await api.listGet()
+        const list = []
 
         for (let key in rawData) {
             let task = rawData[key];
@@ -65,16 +57,16 @@ export const actions = {
     async send({
         commit,
         dispatch
-    }, item) {
-        api.taskPut(item);
+    }, task) {
+        await api.taskPut(task)
         dispatch('fetch')
     },
 
     async sendToggle({
         commit,
         dispatch
-    }, item) {
-        commit("toggle", item)
-        api.taskPut(item);
+    }, ops) {
+        commit("toggle", ops)
+        await api.taskPut(ops.task)
     }
 }
