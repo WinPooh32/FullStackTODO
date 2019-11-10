@@ -67,6 +67,7 @@ export default {
    */
   build: {
     transpile: [/^todo/],
+    extractCSS: true,
     /*
      ** You can extend webpack config here
      */
